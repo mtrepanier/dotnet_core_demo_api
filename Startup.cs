@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using dotnet_core_demo_api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_core_demo_api
 {
@@ -27,8 +29,12 @@ namespace dotnet_core_demo_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TodoDbContext>(opt => opt.UseInMemoryDatabase());
+        
             // Add framework services.
             services.AddMvc();
+
+            services.AddSingleton<ITodoRepository, TodoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
